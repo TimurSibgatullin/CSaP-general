@@ -10,11 +10,13 @@ public class Main {
     String loginInp = "";
     String passwordInp = "";
     while (true) {
+        System.out.print("Введите логин: ");
         Scanner loginScan = new Scanner(System.in);
         loginInp = loginScan.nextLine();
         if (loginInp.equals("exit")) {
             return;
         }
+        System.out.print("Введите пароль: ");
         Scanner passwordScan = new Scanner(System.in);
         passwordInp = passwordScan.nextLine();
         String[] src = {loginInp, passwordInp};
