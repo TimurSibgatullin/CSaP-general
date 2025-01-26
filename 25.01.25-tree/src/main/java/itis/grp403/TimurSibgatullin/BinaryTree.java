@@ -1,11 +1,12 @@
 package itis.grp403.TimurSibgatullin;
 
 public abstract class BinaryTree {
-    public Node traversalTree(Node node) {
+    protected Node traversalTree(Node node) {
         return null;
     }
 
-    public void addLeaf(int value, Node node) {
+
+    static private void addLeaf(int value, Node node) {
         if (value > node.value()) {
             if (node.right() == null) {
                 Node tempNode = new Node(value);
@@ -21,5 +22,13 @@ public abstract class BinaryTree {
                 addLeaf(value, node.left());
             }
         }
+    }
+
+     protected Node growTree(int[] values) {
+        Node res = new Node(values[0]);
+        for (int i = 1; i < values.length; i++) {
+            addLeaf(values[i], res);
+        }
+        return res;
     }
 }
