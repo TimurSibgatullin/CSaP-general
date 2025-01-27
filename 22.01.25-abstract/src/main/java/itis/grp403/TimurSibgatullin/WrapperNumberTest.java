@@ -17,8 +17,6 @@ public class WrapperNumberTest {
 
         d = func3(d); //1. распаковка при передаче значения аргумента
         //2. упаковка результата функции в класс обертку
-
-        System.out.println(d);
     }
 
     public static Integer func1(int a) {
