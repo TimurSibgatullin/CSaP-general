@@ -3,7 +3,7 @@ package itis.grp403.TimurSibgatullin;
 abstract class Elevator implements ElevatorInterface, Step {
     protected ElevatorState state;
     protected int currentFloor;
-    protected Integer destinationFloor; // Если null – цель не задана
+    protected Integer destinationFloor; // eсли null – цель не задана
 
     public Elevator() {
         currentFloor = 1;
@@ -34,7 +34,7 @@ abstract class Elevator implements ElevatorInterface, Step {
         }
     }
 
-    // Шаг: обновление текущего этажа в зависимости от направления
+    // обновление этажа от направленияя
     public void step() {
         if (state == ElevatorState.GOING_UP) {
             currentFloor++;
@@ -51,10 +51,10 @@ abstract class Elevator implements ElevatorInterface, Step {
                 destinationFloor = null;
             }
         }
-        // При состояниях NOT_WORKING или STANDS ничего не делаем
+        // если NOT_WORKING или STANDS ничего не делаем
     }
 
-    // Каждый наследник должен вернуть свой тип (для сообщений)
+    // каждый наследник должен вернуть свой тип
     abstract String getElevatorType();
 
     abstract CallType getSupportedCallType();
