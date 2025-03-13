@@ -31,7 +31,7 @@ public class List implements ListInterface {
 
     }
 
-    public void grow() {
+    private void grow() {
         Integer[] temp = new Integer[(int) (size * 1.5)];
         for (int i = 0; i < size; i++) {
             temp[i] = vals[i];
