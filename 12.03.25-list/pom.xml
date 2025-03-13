@@ -3,19 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>itis.grp403.TimurSibgatullin</groupId>
+        <artifactId>CSaP-general</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <groupId>itis.grp403.TimurSibgatullin</groupId>
-    <artifactId>CSaP-general</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>14.01.25-exceptions</module>
-        <module>18.01.25-login-chk</module>
-        <module>22.01.25-abstract</module>
-        <module>25.01.25-tree</module>
-        <module>01.02.25-elevators</module>
-        <module>12.03.25-list</module>
-    </modules>
+    <artifactId>12.03.25-list</artifactId>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
