@@ -1,4 +1,4 @@
-package itis.grp403.TimurSibgatullin;
+package itis.grp403.TimurSibgatullin.IntegerList;
 
 public class List implements ListInterface {
     private Integer[] vals;
@@ -67,7 +67,7 @@ public class List implements ListInterface {
             throw new IndexOutOfBoundsException();
         }
         Integer temp = vals[position];
-        for (int i = position; i < size - 1; i++) {
+        for (int i = position; i < size; i++) {
             vals[i] = vals[i + 1];
         }
         size--;
