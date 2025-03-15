@@ -1,15 +1,16 @@
 package itis.grp403.TimurSibgatullin;
 
-public class LinkedListInterface<T> {
+public interface LinkedListInterface<T> {
     /**
      * добавляет в конец списка
-     * @param element
+     * @param value
      */
     void add(T value);
 
     /**
      * метод добавляет элемент в указаннную позицию
-     * @param element
+     * @param position
+     * @param value
      */
     void add(int position, T value);
 
@@ -17,7 +18,7 @@ public class LinkedListInterface<T> {
      * возвращает размер списка
      * @return
      */
-//    int size();
+    int size();
 
     /**
      * возвращает элемент по индексу
@@ -32,6 +33,4 @@ public class LinkedListInterface<T> {
 //     * @throws IndexOutOfBoundsException
 //     */
     T remove(int position) throws IndexOutOfBoundsException;
-}
-
 }
