@@ -16,6 +16,7 @@
         <module>01.02.25-elevators</module>
         <module>12.03.25-list</module>
         <module>15.03.25-generic-linked-list</module>
+        <module>15.03.25-generic-set</module>
     </modules>
 
     <properties>
