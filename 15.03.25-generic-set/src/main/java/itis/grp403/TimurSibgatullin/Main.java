@@ -19,6 +19,10 @@ public class Main {
         set.add(5);
         System.out.println(set+ "\n");
 
+//        Object[] temp = set.getAll();
+//        for (int i = 0; i < (temp.length); i++) {
+//            System.out.println(temp[i]);
+//        }
         System.out.println("получаем массив T");
         System.out.println(set.getAll() + "\n");
 

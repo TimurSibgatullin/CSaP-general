@@ -53,7 +53,11 @@ public class Set<T> implements SetInterface<T> {
 
     @Override
     public T[] getAll() {
-        return (T[]) vals;
+        Object[] temp = new Object[size];
+        for (int i = 0; i < size; i++) {
+            temp[i] = vals[i];
+        }
+        return (T[]) temp;
     }
 
     @Override
