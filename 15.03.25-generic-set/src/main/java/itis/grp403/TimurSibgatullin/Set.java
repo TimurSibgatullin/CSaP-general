@@ -14,10 +14,8 @@ public class Set<T> implements SetInterface<T> {
         if (size == vals.length) {
             grow();
         }
-        for (Object i : vals) {
-            if (elem.equals(i)) {
-                return false;
-            }
+        if (contains(elem)) {
+            return false;
         }
         vals[size] = elem;
         size++;
@@ -80,7 +78,7 @@ public class Set<T> implements SetInterface<T> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            sb.append(vals[i]).append(" ");
+            sb.append(vals[i]).append("; ");
         }
         return sb.toString();
     }
