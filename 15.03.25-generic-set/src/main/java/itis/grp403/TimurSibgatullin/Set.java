@@ -5,10 +5,12 @@ import java.util.concurrent.TransferQueue;
 public class Set<T> implements SetInterface<T> {
     private Object[] vals;
     private int size;
+
     public Set() {
         this.vals = new Object[10];
         this.size = 0;
     }
+
     @Override
     public boolean add(T elem) {
         if (size == vals.length) {
@@ -25,24 +27,45 @@ public class Set<T> implements SetInterface<T> {
     }
 
     @Override
-    public int length() {
+    public int size() {
         return size;
     }
 
     @Override
     public T remove(T elem) {
         int position = 0;
-        for (int i = 0; i < size; position++) {
-            if (elem.equals(i)) {
+        boolean fl = false;
+        for (int i = 0; i < size; i++) {
+            if (elem.equals(vals[i])) {
+                fl = true;
                 break;
             }
+            position++;
         }
-        T temp = (T) vals[position];
-        for (int i = position; i < size; i++) {
-            vals[i] = vals[i + 1];
+        if (fl) {
+            T temp = (T) vals[position];
+            for (int i = position; i < size; i++) {
+                vals[i] = vals[i + 1];
+            }
+            size--;
+            return temp;
         }
-        size--;
-        return temp;
+        return null;
+    }
+
+    @Override
+    public T[] getAll() {
+        return (T[]) vals;
+    }
+
+    @Override
+    public boolean contains(T elem) {
+        for (int i = 0; i < size; i++) {
+            if (elem.equals(vals[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void grow() {

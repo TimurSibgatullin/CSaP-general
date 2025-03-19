@@ -10,11 +10,24 @@ public interface SetInterface<T> {
      * Метод выводит размер множества
      * @return
      */
-    int length();
+    int size();
 
     /**
      * Удаляет элемент из множества
      * @param elem
      */
     T remove(T elem);
+
+    /**
+     * Получить все символы
+     * @return
+     */
+    T[] getAll();
+
+    /**
+     * Проверка на наличие элемента
+     * @param element
+     * @return
+     */
+    boolean contains(T element);
 }
