@@ -1,7 +1,5 @@
 package itis.grp403.TimurSibgatullin;
 
-import java.util.concurrent.TransferQueue;
-
 public class Set<T> implements SetInterface<T> {
     private Object[] vals;
     private int size;
@@ -21,7 +19,7 @@ public class Set<T> implements SetInterface<T> {
                 return false;
             }
         }
-        vals[size] = (T) elem;
+        vals[size] = elem;
         size++;
         return true;
     }

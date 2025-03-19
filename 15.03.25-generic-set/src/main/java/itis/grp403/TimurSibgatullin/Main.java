@@ -20,7 +20,7 @@ public class Main {
         System.out.println(set+ "\n");
 
         System.out.println("получаем массив T");
-        System.out.println(set.getAll()+ "\n");
+        System.out.println(set.getAll() + "\n");
 
         System.out.println("удаляем элементы");
         System.out.println(set.remove(5));
