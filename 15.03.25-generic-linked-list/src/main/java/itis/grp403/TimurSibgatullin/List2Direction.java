@@ -17,11 +17,9 @@ public class List2Direction<T> implements LinkedListInterface<T>{
     public void add(T value) {
         if (first == null) {
             first = new Node(value);
+            last = first;
         } else {
-            Node current = first;
-            while (current.next != null) {
-                current = current.next;
-            }
+            Node current = last;
             current.next = new Node(value);
             current.next.prev = current;
             last = current.next;
