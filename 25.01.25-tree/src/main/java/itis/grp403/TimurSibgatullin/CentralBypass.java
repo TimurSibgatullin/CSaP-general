@@ -1,9 +1,8 @@
 package itis.grp403.TimurSibgatullin;
 
 public class CentralBypass extends BinaryTree {
-    private Node node;
-    public CentralBypass(int[] vals) {
-        this.node = growTree(vals);
+    public CentralBypass(int[] values) {
+        super(values);
     }
 
     public void traversal() {

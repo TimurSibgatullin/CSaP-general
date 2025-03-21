@@ -1,9 +1,8 @@
 package itis.grp403.TimurSibgatullin;
 
 public class LeftBypass extends BinaryTree {
-    private Node node;
-    public LeftBypass(int[] vals) {
-        this.node = growTree(vals);
+    public LeftBypass(int[] values) {
+        super(values);
     }
 
     public void traversal() {

@@ -13,6 +13,11 @@
         <module>18.01.25-login-chk</module>
         <module>22.01.25-abstract</module>
         <module>25.01.25-tree</module>
+        <module>01.02.25-elevators</module>
+        <module>12.03.25-list</module>
+        <module>15.03.25-generic-linked-list</module>
+        <module>15.03.25-generic-set</module>
+        <module>19.03.25-inked-list-vs-list</module>
     </modules>
 
     <properties>
