@@ -17,6 +17,7 @@
         <module>12.03.25-list</module>
         <module>15.03.25-generic-linked-list</module>
         <module>15.03.25-generic-set</module>
+        <module>19.03.25-inked-list-vs-list</module>
     </modules>
 
     <properties>
