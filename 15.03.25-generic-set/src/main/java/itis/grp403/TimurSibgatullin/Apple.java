@@ -15,6 +15,17 @@ public class Apple implements CanCompare {
     }
 
     @Override
+    public int hashCode() {
+        int h = super.hashCode();
+        for (int i = 0; i < kind.length(); ++i) {
+            h = h ^ kind.charAt(i);
+        }
+        h = h * weight * 17;
+        return h;
+    }
+
+
+    @Override
     public int compare(CanCompare other) {
         return this.price - ((Apple)other).price;
     }
@@ -24,6 +35,9 @@ public class Apple implements CanCompare {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
+//        if (obj == null) return false;
+//        if (!obj.getClass().equals(this.getClass())) return false;
+//        if  (this == obj) return true;
         Apple apple = (Apple) obj;
         if (this.kind.equals(apple.getKind())) {
             return true;
