@@ -22,7 +22,7 @@ public interface SetInterface<T> {
      * Получить все символы
      * @return
      */
-    T[] getAll();
+    T[] getAll(T[] c);
 
     /**
      * Проверка на наличие элемента

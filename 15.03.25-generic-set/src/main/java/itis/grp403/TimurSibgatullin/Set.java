@@ -1,5 +1,7 @@
 package itis.grp403.TimurSibgatullin;
 
+import java.lang.reflect.Array;
+
 public class Set<T> implements SetInterface<T> {
     private Object[] vals;
     private int size;
@@ -50,12 +52,14 @@ public class Set<T> implements SetInterface<T> {
     }
 
     @Override
-    public T[] getAll() {
-        Object[] temp = new Object[size];
+    public T[] getAll(T[] c) {
+        System.out.println(c.getClass().componentType());
+        T[] newVal = (T[]) Array.newInstance(c.getClass().componentType(), size);
         for (int i = 0; i < size; i++) {
-            temp[i] = vals[i];
+            newVal[i] = (T) vals[i];
         }
-        return (T[]) temp;
+        T[] result = newVal;
+        return result;
     }
 
     @Override
