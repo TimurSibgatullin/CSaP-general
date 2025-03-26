@@ -18,6 +18,7 @@
         <module>15.03.25-generic-linked-list</module>
         <module>15.03.25-generic-set</module>
         <module>19.03.25-inked-list-vs-list</module>
+        <module>26.03.25-transport-csv</module>
     </modules>
 
     <properties>
