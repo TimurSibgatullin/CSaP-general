@@ -8,8 +8,10 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         TransportService transportService = new TransportService("C:\\Users\\timur\\IdeaProjects\\CSaP-general\\26.03.25-transport-csv\\transport.csv");
         List<Transport> transports = transportService.readAll();
-        System.out.println(transports.toString());
-        TransportPrintService transportPrintService = new TransportPrintService();
-        transportPrintService.printParkNumber(transports);
+//        System.out.println(transports.toString());
+//        TransportPrintService transportPrintService = new TransportPrintService();
+//        transportPrintService.printParkNumber(transports);
+        TransportPrintService transportPrintService2 = new TransportPrintService();
+        transportPrintService2.printParkNumber2(transports);
     }
 }

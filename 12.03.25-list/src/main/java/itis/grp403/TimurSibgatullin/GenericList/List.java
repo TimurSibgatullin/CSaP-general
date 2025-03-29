@@ -1,5 +1,7 @@
 package itis.grp403.TimurSibgatullin.GenericList;
 
+import java.util.Comparator;
+
 public class List<T> implements ListInterface<T> {
     private Object[] vals;
     private int size;
@@ -59,6 +61,19 @@ public class List<T> implements ListInterface<T> {
         size--;
         return temp;
     }
+
+    public void sort(Comparator<T> comparator) {
+        for (int i = 0; i < size - 1; i++){
+            for (int j = 0; j < size - 1; j++){
+                if ((comparator.compare((T) vals[j], (T) vals[j+1])) > 0) {
+                    T temp = (T) vals[j];
+                    vals[j] = vals[j+1];
+                    vals[j+1] = temp;
+                };
+            }
+        }
+    }
+
 
     @Override
     public String toString() {
