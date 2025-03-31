@@ -7,6 +7,6 @@ public class Trolleybus extends Transport{
 
     @Override
     public String toString() {
-        return "Trolleybus №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";";
+        return "Trolleybus №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";\t";
     }
 }

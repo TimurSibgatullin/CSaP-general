@@ -1,5 +1,7 @@
 package itis.grp403.TimurSibgatullin.GenericList;
 
+import java.util.Comparator;
+
 public interface ListInterface<T> {
     /**
      * добавляет в конец списка
@@ -25,6 +27,8 @@ public interface ListInterface<T> {
      * @return
      */
     T get(int position) throws IndexOutOfBoundsException;
+
+    void sort(Comparator<T> comparator);
 
 //    /**
 //     * Удаляет элемент по индексу

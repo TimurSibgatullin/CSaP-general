@@ -7,6 +7,6 @@ public class Tram extends Transport{
 
     @Override
     public String toString() {
-        return "Tram №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";";
+        return "Tram №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";\t";
     }
 }

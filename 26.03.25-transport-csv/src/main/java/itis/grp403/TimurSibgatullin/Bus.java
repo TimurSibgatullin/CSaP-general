@@ -7,6 +7,6 @@ public class Bus extends Transport{
 
     @Override
     public String toString() {
-        return "Bus №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";";
+        return "Bus №: " +  number + ", route №: " + routeNumber + ", workTimeBegin: " + workTimeBegin + ", WorkTimeEnd: " + workTimeEnd + ";\t";
     }
 }
