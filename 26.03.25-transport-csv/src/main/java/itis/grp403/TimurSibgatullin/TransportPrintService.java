@@ -44,4 +44,26 @@ public class TransportPrintService {
         }
         System.out.println(routes.size());
     }
+
+    public void TypesCounter(List<Transport> transport) {
+        Set<Object> routes = new Set<>();
+        for (int i = 0; i < transport.size(); i++) {
+            List<String> temp = new List<>();
+            temp.add(transport.get(i).getClass().getName());
+            temp.add(transport.get(i).getNumber());
+            routes.add(temp);
+        }
+        System.out.println(routes.size());
+    }
+
+    public void DifferentTransport(List<Transport> transport) {
+        Set<Object> routes = new Set<>();
+        for (int i = 0; i < transport.size(); i++) {
+            List<String> temp = new List<>();
+            temp.add(transport.get(i).getClass().getName());
+            temp.add(transport.get(i).getNumber());
+            routes.add(temp);
+        }
+        System.out.println(routes.size());
+    }
 }
