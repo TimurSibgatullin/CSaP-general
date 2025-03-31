@@ -44,14 +44,16 @@ public class Main {
         TransportPrintService transportPrintService2 = new TransportPrintService();
         transportPrintService2.printSortedParkNumber(transports);
 
-        TransportPrintService transportPrintService3 = new TransportPrintService();
-        transportPrintService3.printSortedRouteNumber(transports);
+//        TransportPrintService transportPrintService3 = new TransportPrintService();
+        transportPrintService2.printSortedRouteNumber(transports);
 
-        TransportPrintService transportPrintService4 = new TransportPrintService();
-        transportPrintService4.RoutesCounter(transports);
+//        TransportPrintService transportPrintService4 = new TransportPrintService();
+        transportPrintService2.RoutesCounter(transports);
 
-        TransportPrintService transportPrintService5 = new TransportPrintService();
-        transportPrintService5.TypesCounter(transports);
+//        TransportPrintService transportPrintService5 = new TransportPrintService();
+        transportPrintService2.TypesCounter(transports);
 
+//        TransportPrintService transportPrintService6 = new TransportPrintService();
+        transportPrintService2.DifferentTransport(transports);
     }
 }

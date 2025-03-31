@@ -46,24 +46,35 @@ public class TransportPrintService {
     }
 
     public void TypesCounter(List<Transport> transport) {
-        Set<Object> routes = new Set<>();
+        Set<Object> transports = new Set<>();
         for (int i = 0; i < transport.size(); i++) {
             List<String> temp = new List<>();
             temp.add(transport.get(i).getClass().getName());
             temp.add(transport.get(i).getNumber());
-            routes.add(temp);
+            transports.add(temp);
         }
-        System.out.println(routes.size());
+        System.out.println(transports.size());
     }
 
     public void DifferentTransport(List<Transport> transport) {
-        Set<Object> routes = new Set<>();
+        Set<String> routes = new Set<>();
+        List<Set<String>> vals = new List<>();
         for (int i = 0; i < transport.size(); i++) {
-            List<String> temp = new List<>();
-            temp.add(transport.get(i).getClass().getName());
-            temp.add(transport.get(i).getNumber());
-            routes.add(temp);
+            if (!routes.contains(transport.get(i).getRouteNumber())) {
+                routes.add(transport.get(i).getRouteNumber());
+                Set<String> temp = new Set<>();
+                for (int j = 0; j < transport.size(); j++) {
+                    if (transport.get(i).getRouteNumber().equals(transport.get(j).getRouteNumber())) {
+                        temp.add(transport.get(j).getNumber());
+                    }
+                }
+                vals.add(temp);
+            }
         }
-        System.out.println(routes.size());
+        String[] temp = routes.getAll(new String[0]);
+        for (int i = 0; i < routes.size(); i++) {
+            System.out.print(temp[i] + " -- " + vals.get(i).size() + "; ");
+        }
+        System.out.println();
     }
 }
