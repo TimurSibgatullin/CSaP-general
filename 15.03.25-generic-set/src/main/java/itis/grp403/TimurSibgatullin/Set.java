@@ -53,7 +53,6 @@ public class Set<T> implements SetInterface<T> {
 
     @Override
     public T[] getAll(T[] c) {
-        System.out.println(c.getClass().componentType());
         T[] newVal = (T[]) Array.newInstance(c.getClass().componentType(), size);
         for (int i = 0; i < size; i++) {
             newVal[i] = (T) vals[i];
