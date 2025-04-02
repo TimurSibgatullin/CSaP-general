@@ -19,6 +19,8 @@
         <module>15.03.25-generic-set</module>
         <module>19.03.25-inked-list-vs-list</module>
         <module>26.03.25-transport-csv</module>
+        <module>02.04.25-map</module>
+        <module>02.04.25-map</module>
     </modules>
 
     <properties>
