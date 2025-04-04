@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 public class HashMap<K,V> implements HashMapInterface<K,V> {
     public HashMap() {
-        this.array = new Node[16];
+        this.array = new Node[capacity];
     }
 
     private class EntryImpl<K,V> implements Entry<K,V> {
@@ -53,7 +53,7 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
     private Node<K,V>[] array;
 
     public HashMap(Node[] array) {
-        this.array = new Node[16];
+        this.array = new Node[capacity];
     }
 
     @Override
@@ -65,13 +65,13 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
             array[index] = temp;
         } else {
             Node current = array[index];
-            while(current.next != null) {
+            while(current != null) {
                 if (current.value.getKey().equals(key)) {
                     current.value.setValue(value);
                 }
                 current = current.next;
             }
-            current.next = temp;
+            current = temp;
         }
         size++;
     }
@@ -94,12 +94,32 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
 
     @Override
     public Set<K> keySet() {
-        return null;
+        Set<K> temp = new Set<>();
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                Node<K, V> current = array[i];
+                while (current != null) {
+                    temp.add(current.value.getKey());
+                    current = current.next;
+                }
+            }
+        }
+        return temp;
     }
 
     @Override
-    public List<K> values() {
-        return null;
+    public List<V> values() {
+        List<V> temp = new List<>();
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                Node<K, V> current = array[i];
+                while (current != null) {
+                    temp.add(current.value.getValue());
+                    current = current.next;
+                }
+            }
+        }
+        return temp;
     }
 
     @Override
@@ -109,26 +129,56 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return get(key) != null;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean containsValue(V value) {
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                Node<K, V> current = array[i];
+                while (current != null) {
+                    if (value.equals(current.value.getValue())) {
+                        return true;
+                    }
+                    current = current.next;
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public V remove(K key) {
+        int index = Math.abs(key.hashCode()) % capacity;
+        if (array[index] == null) {
+            return null;
+        }
+        Node<K, V> current = array[index];
+        Node<K, V> last = array[index];
+        if (current.value.getKey().equals(key)) {
+            array[index] = current.next;
+            return current.value.getValue();
+        }
+        current = current.next;
+        while(current != null) {
+            if (current.value.getKey().equals(key)) {
+                last.next = current.next;
+                return current.value.getValue();
+            }
+            current = current.next;
+        }
         return null;
     }
 
     @Override
     public void clear() {
-
+        this.array = new Node[capacity];
+        this.size = 0;
     }
 }

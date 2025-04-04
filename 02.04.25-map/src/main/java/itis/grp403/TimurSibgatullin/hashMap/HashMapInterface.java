@@ -8,7 +8,7 @@ public interface HashMapInterface<K, V> {
     void put(K key, V value);
     V get (K key);
     Set<K> keySet();
-    List<K> values();
+    List<V> values();
     int size();
     boolean containsKey(K key);
     boolean isEmpty();
