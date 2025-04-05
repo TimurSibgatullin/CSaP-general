@@ -163,12 +163,14 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
         Node<K, V> last = array[index];
         if (current.value.getKey().equals(key)) {
             array[index] = current.next;
+            size--;
             return current.value.getValue();
         }
         current = current.next;
         while(current != null) {
             if (current.value.getKey().equals(key)) {
                 last.next = current.next;
+                size--;
                 return current.value.getValue();
             }
             current = current.next;
