@@ -4,11 +4,53 @@ import itis.grp403.TimurSibgatullin.GenericList.List;
 import itis.grp403.TimurSibgatullin.Set;
 
 import javax.swing.border.EmptyBorder;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class HashMap<K,V> implements HashMapInterface<K,V> {
     public HashMap() {
         this.array = new Node[capacity];
     }
+
+    @Override
+    public Iterator<Map.Entry<K, V>> iterator() {
+        return new HashMapIterator();
+    }
+
+    class HashMapIterator implements Iterator<Map.Entry<K, V>> {
+        private int currentIndex = 0;
+        private Node currentNode = null;
+
+        public boolean hasNext() {
+            for (int i = currentIndex; i < array.length; i++) {
+                if (array[i] != null) {
+                    if (currentNode == null) {
+                        currentNode = array[i];
+                        return true;
+                    } else {
+                        if (currentNode.next != null) {
+                            currentNode = currentNode.next;
+                            return true;
+                        } else {
+                            currentNode = null;
+                            currentIndex++;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public Map.Entry<K, V> next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return (Map.Entry<K, V>) currentNode.getValue();
+        }
+    }
+
+
 
     private class EntryImpl<K,V> implements Entry<K,V> {
         K key;
@@ -39,12 +81,17 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
             this.value = value;
         }
     }
+
     private int capacity = 16;
     private int size;
     private class Node<K,V> {
         public Node(K key, V value) {
             this.value = new EntryImpl<K,V>(key, value);
             this.next = null;
+        }
+
+        public Entry<K,V> getValue() {
+            return value;
         }
 
         Entry<K,V> value;

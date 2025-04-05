@@ -7,8 +7,8 @@ import itis.grp403.TimurSibgatullin.Set;
 import java.util.HashMap;
 import java.util.Iterator;
 
-//public interface HashMapInterface<K, V> extends Iterator<HashMap.Entry<K, V>> {
-public interface HashMapInterface<K, V> {
+
+public interface HashMapInterface<K, V> extends Iterable<HashMap.Entry<K, V>> {
     void put(K key, V value);
     V get (K key);
     Set<K> keySet();
