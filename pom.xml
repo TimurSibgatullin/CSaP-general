@@ -21,6 +21,7 @@
         <module>26.03.25-transport-csv</module>
         <module>02.04.25-map</module>
         <module>02.04.25-map</module>
+        <module>05.04.25-iterator</module>
     </modules>
 
     <properties>
