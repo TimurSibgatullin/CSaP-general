@@ -3,38 +3,36 @@ package itis.grp403.TimurSibgatullin.hashMap;
 import itis.grp403.TimurSibgatullin.GenericList.List;
 import itis.grp403.TimurSibgatullin.Set;
 
-import javax.swing.border.EmptyBorder;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class HashMap<K,V> implements HashMapInterface<K,V> {
+public class HashMap<K,V> implements HashMapInterface<K,V>{
     public HashMap() {
         this.array = new Node[capacity];
     }
 
     @Override
-    public Iterator<Map.Entry<K, V>> iterator() {
+    public Iterator<HashMap.Entry<K, V>> iterator() {
         return new HashMapIterator();
     }
 
-    class HashMapIterator implements Iterator<Map.Entry<K, V>> {
+    class HashMapIterator implements Iterator<Entry<K,V>> {
         private int currentIndex = 0;
         private Node currentNode = null;
 
         public boolean hasNext() {
+            Node localCurrentNode = currentNode;
             for (int i = currentIndex; i < array.length; i++) {
                 if (array[i] != null) {
-                    if (currentNode == null) {
-                        currentNode = array[i];
+                    if (localCurrentNode == null) {
+                        localCurrentNode = array[i];
                         return true;
                     } else {
-                        if (currentNode.next != null) {
-                            currentNode = currentNode.next;
+                        if (localCurrentNode.next != null) {
+                            localCurrentNode = localCurrentNode.next;
                             return true;
                         } else {
-                            currentNode = null;
-                            currentIndex++;
+                            localCurrentNode = null;
                         }
                     }
                 }
@@ -42,11 +40,27 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
             return false;
         }
 
-        public Map.Entry<K, V> next() {
+        public Entry<K,V> next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            return (Map.Entry<K, V>) currentNode.getValue();
+            for (int i = currentIndex; i < array.length; i++) {
+                if (array[i] != null) {
+                    if (currentNode == null) {
+                        currentNode = array[i];
+                        return currentNode.getValue();
+                    } else {
+                        if (currentNode.next != null) {
+                            currentNode = currentNode.next;
+                            return currentNode.getValue();
+                        } else {
+                            currentNode = null;
+                        }
+                    }
+                }
+                currentIndex++;
+            }
+            return null;
         }
     }
 
@@ -79,6 +93,12 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
         @Override
         public void setValue(V value) {
             this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            return sb.append(key).append(" ").append(value).toString();
         }
     }
 
@@ -115,10 +135,12 @@ public class HashMap<K,V> implements HashMapInterface<K,V> {
             while(current != null) {
                 if (current.value.getKey().equals(key)) {
                     current.value.setValue(value);
+                    return;
                 }
+                if (current.next == null) break;
                 current = current.next;
             }
-            current = temp;
+            current.next = temp;
         }
         size++;
     }
