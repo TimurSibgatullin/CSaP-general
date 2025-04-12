@@ -22,6 +22,7 @@ public class Main {
         for (HashMap.Entry<Integer, String> val: map) {
             System.out.println(val);
         }
+
 //        System.out.println(map.get(1) + " " + map.get(2) + " " + map.get(3) + " " + map.get(4) + "\n");
 //
 //        System.out.println(map.keySet());

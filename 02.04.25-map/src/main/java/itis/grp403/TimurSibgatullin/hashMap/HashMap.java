@@ -19,25 +19,10 @@ public class HashMap<K,V> implements HashMapInterface<K,V>{
     class HashMapIterator implements Iterator<Entry<K,V>> {
         private int currentIndex = 0;
         private Node currentNode = null;
+        private int step = 0;
 
         public boolean hasNext() {
-            Node localCurrentNode = currentNode;
-            for (int i = currentIndex; i < array.length; i++) {
-                if (array[i] != null) {
-                    if (localCurrentNode == null) {
-                        localCurrentNode = array[i];
-                        return true;
-                    } else {
-                        if (localCurrentNode.next != null) {
-                            localCurrentNode = localCurrentNode.next;
-                            return true;
-                        } else {
-                            localCurrentNode = null;
-                        }
-                    }
-                }
-            }
-            return false;
+            return  (step < size);
         }
 
         public Entry<K,V> next() {
@@ -48,10 +33,12 @@ public class HashMap<K,V> implements HashMapInterface<K,V>{
                 if (array[i] != null) {
                     if (currentNode == null) {
                         currentNode = array[i];
+                        step++;
                         return currentNode.getValue();
                     } else {
                         if (currentNode.next != null) {
                             currentNode = currentNode.next;
+                            step++;
                             return currentNode.getValue();
                         } else {
                             currentNode = null;
@@ -60,6 +47,7 @@ public class HashMap<K,V> implements HashMapInterface<K,V>{
                 }
                 currentIndex++;
             }
+            step++;
             return null;
         }
     }
