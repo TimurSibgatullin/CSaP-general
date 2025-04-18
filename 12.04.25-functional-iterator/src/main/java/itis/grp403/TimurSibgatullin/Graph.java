@@ -1,14 +1,15 @@
 package itis.grp403.TimurSibgatullin;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.*;
+import java.util.Set;
 
 public class Graph implements Iterable<Character>{
     private Map<Character, Set<Character>> graph;
 
+
     public Graph() {
         graph = new HashMap<>();
+
 
         graph.put('d', new HashSet<>());
         graph.put('a', new HashSet<>(Set.of('d','c')));
