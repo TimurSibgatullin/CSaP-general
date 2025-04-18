@@ -1,6 +1,9 @@
 package map_vals_to_parametrized_list;
 
+import itis.grp403.TimurSibgatullin.GenericList.List;
+
 import java.util.Iterator;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,11 +15,25 @@ public class Main {
         map.put(4, "Timur");
         map.put(4, "XÆA-12");
 
-        Iterator<HashMapFuncFunc.Entry<Integer, String>> iterator = map.iterator();
 
-        for (HashMapFuncFunc.Entry<Integer, String> val: map) {
-            System.out.println(val);
-        }
+//        List<Integer> set = map.map(
+//                new Function<String, Integer>() {
+//                    public Integer apply(String s) {
+//                        return s.length();
+//                    }
+//                }
+//        );
+
+        List<Integer> set = map.map(s -> s.length());
+
+        //set.forEach(s -> System.out.println(s));
+        set.forEach(System.out::println);
+
+//        Iterator<HashMapFuncFunc.Entry<Integer, String>> iterator = map.iterator();
+//
+//        for (HashMapFuncFunc.Entry<Integer, String> val: map) {
+//            System.out.println(val);
+//        }
 
 //        System.out.println(map.get(1) + " " + map.get(2) + " " + map.get(3) + " " + map.get(4) + "\n");
 //

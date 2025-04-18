@@ -1,8 +1,11 @@
 package itis.grp403.TimurSibgatullin.GenericList;
 
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
-public class List<T> implements ListInterface<T> {
+public class List<T> implements ListInterface<T>, Iterable<T> {
     private Object[] vals;
     private int size;
 
@@ -83,4 +86,26 @@ public class List<T> implements ListInterface<T> {
         }
         return stringBuilder.toString();
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<T> {
+        int current = 0;
+        @Override
+        public boolean hasNext() {
+            return (current<size);
+        }
+
+        @Override
+        public T next() {
+            if (current<size) {
+                return (T) vals[current++];
+            } else {
+                return null;
+            }
+        }
+    };
 }

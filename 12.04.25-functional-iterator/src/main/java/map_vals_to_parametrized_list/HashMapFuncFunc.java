@@ -6,6 +6,8 @@ import itis.grp403.TimurSibgatullin.Set;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
+
 
 public class HashMapFuncFunc<K,V> implements HashMapInterfacеFunc<K,V> {
     public HashMapFuncFunc() {
@@ -236,12 +238,13 @@ public class HashMapFuncFunc<K,V> implements HashMapInterfacеFunc<K,V> {
         return null;
     }
 
-    public <R> List<R> map(Function<T, R> function) {
-        List<Object> set = new List<>();
+    public <R> List<R> map(Function<V, R> function) {
+        List<R> list = new List<>();
+        List<V> temp = values();
         for(int i = 0; i < size; ++i) {
-            set.add(function.apply((T)values[i]));
+            list.add(function.apply(temp.get(i)));
         }
-        return set;
+        return list;
     }
 
     @Override
