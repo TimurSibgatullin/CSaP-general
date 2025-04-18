@@ -16,15 +16,15 @@ public class Main {
         map.put(4, "XÆA-12");
 
 
-//        List<Integer> set = map.map(
-//                new Function<String, Integer>() {
-//                    public Integer apply(String s) {
-//                        return s.length();
-//                    }
-//                }
-//        );
+        List<Integer> set = map.map(
+                new Function<String, Integer>() {
+                    public Integer apply(String s) {
+                        return s.length();
+                    }
+                }
+        );
 
-        List<Integer> set = map.map(s -> s.length());
+//        List<Integer> set = map.map(s -> s.length());
 
         //set.forEach(s -> System.out.println(s));
         set.forEach(System.out::println);
