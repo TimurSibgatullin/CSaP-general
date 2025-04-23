@@ -30,4 +30,8 @@ public class Person {
     public void setFromcity(String fromcity) {
         this.fromcity = fromcity;
     }
+
+    public String toString() {
+        return birthdate + " " + gender + " " + fromcity;
+    }
 }
