@@ -18,14 +18,40 @@ public class MainBooking {
 //        fromMoscow(bookings);
 //        printChild(bookings);
 //        printHotel(bookings);
+//1. Вывести список гостиниц и кол-во бронирований женщинами
+//2. Вывести список гостиниц и кол-во бронирований мужчинами
+//3. Вывести процент бронирований из Самарской области
+//4. Вывести процент бронирований людьми в возрасте от 40 до 45 лет
+//5. Вывести список городов и кол-во бронирований по ним (город ~ г ...)
+//6. Сформировать Map ключ - гостиница, значение - список городов
+//7. Вывести процент уникальных людей (необходимо описать эквивалентность по полу, дате рождения)
+        System.out.println("Вывести список гостиниц и кол-во бронирований женщинами");
+        printFemaleHotelBookings(bookings);
+        System.out.println();
 
-//        printFemaleHotelBookings(bookings);
-//        printMaleHotelBookings(bookings);
-//        printSamaraHotelBookings(bookings);
-//        printFourty(bookings);
-//        printTownBookings(bookings);
-//        printMapHotel(bookings);
+        System.out.println("Вывести список гостиниц и кол-во бронирований мужчинами");
+        printMaleHotelBookings(bookings);
+        System.out.println();
+
+        System.out.println("Вывести процент бронирований из Самарской области");
+        printSamaraHotelBookings(bookings);
+        System.out.println();
+
+        System.out.println("Вывести процент бронирований людьми в возрасте от 40 до 45 лет");
+        printFourty(bookings);
+        System.out.println();
+
+        System.out.println("Вывести список городов и кол-во бронирований по ним (город ~ г ...)");
+        printTownBookings(bookings);
+        System.out.println();
+
+        System.out.println("Сформировать Map ключ - гостиница, значение - список городов");
+        printMapHotel(bookings);
+        System.out.println();
+
+        System.out.println("Вывести процент уникальных людей (необходимо описать эквивалентность по полу, дате рождения)");
         printUniqPeoples(bookings);
+        System.out.println();
     }
 
     public static void printCount(Bookings bookings) {
@@ -101,7 +127,8 @@ public class MainBooking {
                         (x, y) -> x+y));
         result.entrySet()
                 .stream()
-                .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
+                .forEach(e -> System.out.print(e.getKey() + " " + e.getValue() + "\t"));
+        System.out.println();
     }
 
     //2. Вывести список гостиниц и кол-во бронирований мужчинами
@@ -117,7 +144,8 @@ public class MainBooking {
                         (x, y) -> x+y));
         result.entrySet()
                 .stream()
-                .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
+                .forEach(e -> System.out.print(e.getKey() + " " + e.getValue() + "\t"));
+        System.out.println();
     }
 
     //3. Вывести процент бронирований из Самарской области
@@ -143,17 +171,17 @@ public class MainBooking {
             Date dateBefore = new SimpleDateFormat("yyyy-MM-dd").parse("1985-04-24");
             System.out.println(
                     bookings
-                    .getBookings()
-                    .stream()
-                    .filter(p -> p.getPerson().getBirthdate() != null)
-                    .filter(p -> p.getPerson().getBirthdate().after(dateAfter))
-                    .filter(p -> p.getPerson().getBirthdate().before(dateBefore))
-                    .count() * 100 /
-
-                            bookings
-                                    .getBookings()
-                                    .stream()
-                                    .count()
+                            .getBookings()
+                            .stream()
+                            .filter(p -> p.getPerson().getBirthdate() != null)
+                            .filter(p -> p.getPerson().getBirthdate().after(dateAfter))
+                            .filter(p -> p.getPerson().getBirthdate().before(dateBefore))
+                            .count()
+                            * 100 /
+                    bookings
+                            .getBookings()
+                            .stream()
+                            .count()
             );
         } catch (ParseException e) {
             throw new RuntimeException();
@@ -172,9 +200,9 @@ public class MainBooking {
                         (x, y) -> x+y));
         result.entrySet()
                 .stream()
-                .forEach(e -> System.out.println(e.getKey() + "    bookings count: " + e.getValue()));
+                .forEach(e -> System.out.println(e.getKey() + "    bookings count: " + e.getValue() + " \t"));
+        System.out.println();
     }
-
 
     //6. Сформировать Map ключ - гостиница, значение - список городов
     public static void printMapHotel(Bookings bookings) {
@@ -185,7 +213,7 @@ public class MainBooking {
                         b -> b.getHotel().getName(),
                         b -> {
                             ArrayList<String> res = new ArrayList<>();
-                            res.add(b.getHotel().getName());
+                            res.add(b.getPerson().getFromcity());
                             return res;
                         },
                         (list1, list2) -> {
@@ -196,31 +224,21 @@ public class MainBooking {
                 .stream().
                 forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
     }
+
     //7. Вывести процент уникальных людей (необходимо описать эквивалентность по полу, дате рождения)
     public static void printUniqPeoples(Bookings bookings) {
-        class PersonKey {
-            String gender;
-            Date birthdate;
-            public PersonKey(String gender, Date birthdate) {
-                this.gender = gender;
-                this.birthdate = birthdate;
-            }
-        }
         System.out.println(
                 bookings
                         .getBookings()
                         .stream()
-                        .map(b -> new PersonKey(
-                                b.getPerson().getGender(),
-                                b.getPerson().getBirthdate()
-                        ))
+                        .map(b -> b.getPerson())
                         .distinct() // оставляет только уникальные PersonKey
-                        .count() * 100 /
-                        bookings
-                                .getBookings()
-                                .stream()
-                                .count()
-
+                        .count()
+            * 100 /
+                bookings
+                        .getBookings()
+                        .stream()
+                        .count()
         );
     }
 }
