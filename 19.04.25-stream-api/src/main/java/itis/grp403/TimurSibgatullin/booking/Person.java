@@ -1,6 +1,7 @@
 package itis.grp403.TimurSibgatullin.booking;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Person {
     private String gender;
@@ -33,5 +34,19 @@ public class Person {
 
     public String toString() {
         return birthdate + " " + gender + " " + fromcity;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+        return Objects.equals(gender, person.gender) &&
+                Objects.equals(birthdate, person.birthdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gender, birthdate);
     }
 }
