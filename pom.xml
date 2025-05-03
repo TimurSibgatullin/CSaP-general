@@ -25,6 +25,7 @@
         <module>12.04.25-functional-iterator</module>
         <module>19.04.25-stream-api</module>
         <module>26.04.25-IO-streams</module>
+        <module>30.04.25-dicision-tree</module>
     </modules>
 
     <properties>

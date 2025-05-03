@@ -154,7 +154,7 @@ public class MainBooking {
                 bookings
                         .getBookings()
                         .stream()
-                        .filter(b -> b.getPerson().getFromcity().equals("Самарская область, г Самара"))
+                        .filter(b -> b.getPerson().getFromcity().contains("Самарская область"))
                         .count() * 100 /
 
                 bookings
