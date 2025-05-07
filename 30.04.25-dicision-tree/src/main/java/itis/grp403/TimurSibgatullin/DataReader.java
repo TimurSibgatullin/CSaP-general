@@ -10,7 +10,7 @@ public class DataReader {
         DataReader reader = new DataReader();
         List<RawRow> rawRows = reader.readFile("Копия med.csv");
         reader.clearData(rawRows);
-        reader.convertor(rawRows);
+//        reader.convertor(rawRows);
 
 
     }
@@ -52,6 +52,7 @@ public class DataReader {
     raw.stream()
             .filter(r -> !r.badRecord())
             .map(r -> new Row()).toList();
+    return null;
     }
 
     public Row convertor(RawRow raw) {
@@ -69,16 +70,17 @@ public class DataReader {
         r.setSmokingStatus(raw.getSmokingStatus());                         // String
         r.setAge(Integer.parseInt(raw.getAge()));                           // Integer
         r.setHypertension(raw.getHypertension());
+        return null;
     }
 
-    public void tree() {
-        Node root = new Node();
-        Node[] tree = new Node[63];
-
-        for (int i = 0; i < tree.length; ++i) {
-            tree[i].setFunction(
-                    r -> tree.
-            )
-        }
-    }
+//    public void tree() {
+//        Node root = new Node();
+//        Node[] tree = new Node[63];
+//
+//        for (int i = 0; i < tree.length; ++i) {
+//            tree[i].setFunction(
+//                    r -> tree.
+//            )
+//        }
+//    }
 }
