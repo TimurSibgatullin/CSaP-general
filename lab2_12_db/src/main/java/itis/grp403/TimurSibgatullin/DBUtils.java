@@ -70,6 +70,7 @@ public class DBUtils {
         } catch (IOException e) {
             throw new RuntimeException();
         }
+        appendObject(student);
     }
 
     public static long findPosition(int searchId) {
