@@ -3,6 +3,8 @@ package itis.grp403.TimurSibgatullin;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.RandomAccess;
 
 public class DBUtils {
     public static final String TABLE = "lab2_12_db/src/main/resources/student.tbl";
@@ -60,8 +62,14 @@ public class DBUtils {
         return result;
     }
 
-    public static void editStudent(){
-
+    public static void editStudent(Student student){
+        long position = findPosition(student.getId());
+        File file = new File(TABLE);
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")){
+            raf.seek(position + 4);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
     public static long findPosition(int searchId) {
