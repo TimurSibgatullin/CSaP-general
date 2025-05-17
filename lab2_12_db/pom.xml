@@ -5,27 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>itis.grp403.TimurSibgatullin</groupId>
-        <artifactId>CSaP-general</artifactId>
+        <artifactId>lab2_11_Objects_IO</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab2_11_Objects_IO</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>lab2_12_db</module>
-    </modules>
+    <artifactId>lab2_12_db</artifactId>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+
 </project>
