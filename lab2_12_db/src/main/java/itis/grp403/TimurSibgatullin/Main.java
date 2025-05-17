@@ -19,6 +19,7 @@ public class Main {
         student2.setId(42);
 
         DBUtils.appendObject(student2);
+        DBUtils.editStudent(student);
 
         DBUtils.readAll().forEach(s -> {
             System.out.println(s.getId() + " " +  s.getName());
