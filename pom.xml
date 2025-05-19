@@ -20,13 +20,14 @@
         <module>19.03.25-inked-list-vs-list</module>
         <module>26.03.25-transport-csv</module>
         <module>02.04.25-map</module>
-        <module>02.04.25-map</module>
         <module>05.04.25-iterator</module>
         <module>12.04.25-functional-iterator</module>
         <module>19.04.25-stream-api</module>
         <module>26.04.25-IO-streams</module>
         <module>30.04.25-dicision-tree</module>
+        <module>lab2_10_test</module>
         <module>lab2_11_Objects_IO</module>
+        <module>lab2_12_db</module>
     </modules>
 
     <properties>
