@@ -1,5 +1,7 @@
 package itis.grp403.TimurSibgatullin;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 
 public class FileMerge {
@@ -8,18 +10,10 @@ public class FileMerge {
         try (OutputStream os = new FileOutputStream(outputName);
              InputStream is1 = new FileInputStream("pushkin.txt");
              InputStream is2 = new FileInputStream("Вопросы-по-геометрии-2025.docx")) {
+            is1.transferTo(os);
+            is2.transferTo(os);
 
-            copyStream(is1, os);
-            copyStream(is2, os);
         }
         return outputName;
-    }
-
-    private void copyStream(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = in.read(buffer)) != -1) {
-            out.write(buffer, 0, len);
-        }
     }
 }

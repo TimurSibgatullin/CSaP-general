@@ -1,44 +1,63 @@
 import itis.grp403.TimurSibgatullin.FileMerge;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestFileMerge {
     static FileMerge fileMerge = new FileMerge();
     @Test
-    public void testMerged() throws IOException {
+    public void testFirstPartOfMergedMatchesOriginal() throws IOException {
         fileMerge.mergeFiles();
-        File merged = new File("merged.bin");
-        File expected = new File("expected.bin");
+        String originalFile1 = "pushkin.txt";
+        String originalFile2 = "Вопросы-по-геометрии-2025.docx";
+        String mergedFile = "merged.bin";
 
-        try (
-                FileInputStream fisMerged = new FileInputStream(merged);
-                FileInputStream fisExpected = new FileInputStream(expected)
-        ) {
-            int byteMerged, byteExpected;
-            int position = 0;
+        //считываем объединённый целиком
+        byte[] allMergedBytes = readBytes(mergedFile);
 
-            while (true) {
-                byteMerged = fisMerged.read();
-                byteExpected = fisExpected.read();
+        //считываем пушкина
+        byte[] originalBytes1 = readBytes(originalFile1);
 
-                // Проверяем конец файла
-                if (byteMerged == -1 && byteExpected == -1) {
-                    break; // оба файла закончились одновременно — успех
-                }
+        //считываем пушкина из объединённого
+        byte[] mergedBytes1 = readBytes(mergedFile, 0, originalBytes1.length);
 
-                // Один файл закончился раньше другого
-                if (byteMerged != byteExpected) {
-                    fail("Файлы отличаются на позиции " + position +
-                            ": merged=" + byteMerged + ", expected=" + byteExpected);
-                }
+        //считываем бинарник
+        byte[] originalBytes2 = readBytes(originalFile2);
 
-                position++;
+        //считываем бинарник из объединённого
+        byte[] mergedBytes2 = readBytes(mergedFile, originalBytes1.length, originalBytes2.length);
+
+        assertEquals(allMergedBytes.length, (originalBytes1.length + originalBytes2.length), "Итоговый размер не равен сумме двух исходных");
+        assertArrayEquals(originalBytes1, mergedBytes1, "Начало merged.bin не совпадает с pushkin.txt");
+        assertArrayEquals(originalBytes2, mergedBytes2, "Конец merged.bin не совпадает с Вопросы-по-геометрии-2025.docx");
+    }
+
+    private byte[] readBytes(String path) throws IOException {
+        try (InputStream is = new FileInputStream(path);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
             }
+            return baos.toByteArray();
+        }
+    }
+
+    private byte[] readBytes(String path, int start, int lengthToRead) throws IOException {
+        try (InputStream is = new FileInputStream(path)) {
+            is.skip(start);
+            byte[] buffer = new byte[lengthToRead];
+            int totalRead = 0;
+            while (totalRead < lengthToRead) {
+                int read = is.read(buffer, totalRead, lengthToRead - totalRead);
+                if (read == -1) break; // файл меньше, чем ожидалось
+                totalRead += read;
+            }
+            return buffer;
         }
     }
 }
