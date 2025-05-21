@@ -26,8 +26,8 @@
         <module>26.04.25-IO-streams</module>
         <module>30.04.25-dicision-tree</module>
         <module>lab2_10_test</module>
-        <module>lab2_11_Objects_IO</module>
         <module>lab2_12_db</module>
+        <module>lab2_11_ObjectsIO</module>
     </modules>
 
     <properties>

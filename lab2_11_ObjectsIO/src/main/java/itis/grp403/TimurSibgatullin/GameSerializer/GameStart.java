@@ -1,4 +1,4 @@
-package itis.grp403.TimurSibgatullin;
+package itis.grp403.TimurSibgatullin.GameSerializer;
 
 import java.io.*;
 

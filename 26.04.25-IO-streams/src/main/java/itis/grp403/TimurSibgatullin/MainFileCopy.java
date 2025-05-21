@@ -12,6 +12,7 @@ public class MainFileCopy {
         mainFileCopy.copy();
     }
 
+
     private void inputName() {
         System.out.println("Введите имя файла");
         Scanner sc = new Scanner(System.in);
@@ -32,6 +33,7 @@ public class MainFileCopy {
             int r;
             byte[] buffer = new byte[1024];
             while ((r = fis.read(buffer)) > -1) {
+                //буффер в строку, строку в верхний регистр, строку в оутпут стрим
                 String res = new String(buffer, 0, r).toUpperCase();
                 fos.write(res.getBytes());
             }

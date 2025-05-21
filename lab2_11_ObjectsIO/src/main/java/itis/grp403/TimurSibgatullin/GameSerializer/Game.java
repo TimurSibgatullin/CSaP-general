@@ -1,6 +1,6 @@
-package itis.grp403.TimurSibgatullin;
+package itis.grp403.TimurSibgatullin.GameSerializer;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Scanner;
 
