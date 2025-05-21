@@ -8,12 +8,13 @@ import java.util.RandomAccess;
 
 public class DBUtils {
     public static final String TABLE = "lab2_12_db/src/main/resources/student.tbl";
+
     public static void appendObject(Student student) {
-        //serialization
+        // сериализация student
         byte[] studentData = null;
 
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+             ObjectOutputStream oos = new ObjectOutputStream(bos)) {
             oos.writeObject(student);
             studentData = bos.toByteArray();
 
@@ -24,7 +25,7 @@ public class DBUtils {
         File file = new File(TABLE);
 
         try (DataOutputStream dos =
-                new DataOutputStream(new FileOutputStream(file, true))) {
+                     new DataOutputStream(new FileOutputStream(file, true))) {
             dos.writeInt(student.getId());
             dos.writeByte(1);
             dos.writeInt(studentData.length);
@@ -35,73 +36,83 @@ public class DBUtils {
         }
     }
 
-    public static List<Student> readAll(){
+    public static List<Student> readAll() {
         List<Student> result = new ArrayList<>();
         File file = new File(TABLE);
         if (!file.exists()) {
             return null;
         }
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(file))) {
+        try (DataInputStream dis = new DataInputStream(
+                new FileInputStream(file))) {
             while (true) {
-                Integer id = dis.readInt();
-                boolean flag = dis.readBoolean();
-                Integer size = dis.readInt();
+                int id = dis.readInt();
+                byte flag = dis.readByte();
+                int size = dis.readInt();
                 byte[] data = new byte[size];
                 dis.read(data);
-                if (flag) {
-                    try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data))) {
+                if (flag == 1) {
+                    try (ObjectInputStream ois = new ObjectInputStream(
+                            new ByteArrayInputStream(data)
+                    )) {
                         Student student = (Student) ois.readObject();
                         result.add(student);
                     }
                 }
             }
-        } catch (EOFException e) {
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (EOFException e) {}
+        catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return result;
-    }
 
-    public static void editStudent(Student student){
-        long position = findPosition(student.getId());
-        File file = new File(TABLE);
-        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")){
-            raf.seek(position + 4);
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
-        appendObject(student);
+        return result;
     }
 
     public static long findPosition(int searchId) {
         long position = 0;
         boolean searchFlag = false;
-        List<Student> result = new ArrayList<>();
+        // читаем файл, пока не найдем нужный id
         File file = new File(TABLE);
         if (!file.exists()) {
             return -1;
         }
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(file))) {
+        try (DataInputStream dis = new DataInputStream(
+                new FileInputStream(file))) {
             while (true) {
-                Integer id = dis.readInt();
-                boolean flag = dis.readBoolean();
-                Integer size = dis.readInt();
-                byte[] data = new byte[size];
+                int id = dis.readInt();
+                byte flag = dis.readByte();
+                int size = dis.readInt();
                 dis.skipBytes(size);
-                if (flag && id == searchId) {
+                if (flag == 1 && id == searchId) {
                     searchFlag = true;
                     break;
                 }
                 position += 4 + 1 + 4 + size;
             }
-        } catch (EOFException e) {
+        } catch (EOFException e) {}
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (searchFlag)
+            return position;
+        else
+            return -1;
+    }
+
+    public static void editStudent(Student student) {
+        long position = findPosition(student.getId());
+        // Меняем 1 байт в файле
+        File file = new File(TABLE);
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+            raf.seek(position + 4);
+            raf.write(0); // Write byte 0 (overwrites original byte at this offset).
+            //raf.read();
+            //raf.readInt();
+            //raf.readByte();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (searchFlag) {
-            return position;
-        } else {
-            return -1;
-        }
+
+        appendObject(student);
     }
+
 }
