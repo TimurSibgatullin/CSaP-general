@@ -1,15 +1,20 @@
 package itis.grp403.TimurSibgatullin;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.RandomAccess;
+import java.util.*;
 
 public class DBUtils {
     public static final String TABLE = "lab2_12_db/src/main/resources/student.tbl";
+    private static Set<Index> indexSet = new TreeSet<>();
+    public static void appendStudent(Student student) {
+        Index index = new Index();
+        index.setId(student.getId());
+        if (indexSet.contains(index)) {
+            System.out.println("Студент с этим id уже существует");
+        }
+    }
 
-    public static void appendObject(Student student) {
+    private static void appendObject(Student student) {
         // сериализация student
         byte[] studentData = null;
 
@@ -23,9 +28,16 @@ public class DBUtils {
         }
 
         File file = new File(TABLE);
-
-        try (DataOutputStream dos =
-                     new DataOutputStream(new FileOutputStream(file, true))) {
+        Index index = new Index();
+        index.setId(student.getId());
+        if (indexSet.contains(index)) {
+            delete(student.getId());
+            indexSet.remove(index);
+        }
+        try (FileOutputStream fos = new FileOutputStream(file, true);
+             DataOutputStream dos = new DataOutputStream(fos)) {
+            index.setPosition(fos.getChannel().position());
+            indexSet.add(index);
             dos.writeInt(student.getId());
             dos.writeByte(1);
             dos.writeInt(studentData.length);
@@ -63,56 +75,118 @@ public class DBUtils {
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
     public static long findPosition(int searchId) {
-        long position = 0;
-        boolean searchFlag = false;
-        // читаем файл, пока не найдем нужный id
-        File file = new File(TABLE);
-        if (!file.exists()) {
-            return -1;
-        }
-        try (DataInputStream dis = new DataInputStream(
-                new FileInputStream(file))) {
-            while (true) {
-                int id = dis.readInt();
-                byte flag = dis.readByte();
-                int size = dis.readInt();
-                dis.skipBytes(size);
-                if (flag == 1 && id == searchId) {
-                    searchFlag = true;
-                    break;
-                }
-                position += 4 + 1 + 4 + size;
+        List<Index> sortedList = new ArrayList<>(indexSet);
+        int l = 0, r = sortedList.size() - 1;
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            Index cur = sortedList.get(m);
+            if (cur.getId() == searchId) {
+                return cur.getPosition();
+            } else if (cur.getId() < searchId) {
+                l = m + 1;
+            } else {
+                r = m - 1;
             }
-        } catch (EOFException e) {}
-        catch (IOException e) {
-            throw new RuntimeException(e);
         }
-        if (searchFlag)
-            return position;
-        else
-            return -1;
+        return -1;
     }
 
-    public static void editStudent(Student student) {
-        long position = findPosition(student.getId());
+    public static void delete(int id) {
+        long position = findPosition(id);
+        if (position == -1) {
+            throw new RuntimeException("ID не найден для удаления: " + id);
+        }
+        Index index = new Index();
+        index.setId(id);
+        indexSet.remove(index);
         // Меняем 1 байт в файле
         File file = new File(TABLE);
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            raf.seek(position + 4);
-            raf.write(0); // Write byte 0 (overwrites original byte at this offset).
-            //raf.read();
-            //raf.readInt();
-            //raf.readByte();
+            raf.seek(position);
+            raf.readInt();
+            raf.write(0);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public static Student get(int id) {
+        long position = findPosition(id);
+        if (position == -1) {
+            throw new RuntimeException("ID не найден для удаления: " + id);
+        }
+        File file = new File(TABLE);
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+            raf.seek(position);
+            raf.readInt();
+            raf.readByte();
+            int size = raf.readInt();
+            byte[] buffer = new byte[size];
+            raf.readFully(buffer);
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer)
+            )) {
+                Student student = (Student) ois.readObject();
+                return student;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void toHTML() {
+        try (FileOutputStream fos = new FileOutputStream("lab2_12_db/src/main/resources/students.html");
+                PrintWriter writer = new PrintWriter(fos)) {
+            writer.write("<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"utf-8\"/>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<h1>Студенты</h1>\n" +
+                    "<table>\n" +
+                    "    <tr>\n" +
+                    "        <th>id</th><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Группа</th>\n" +
+                    "    </tr>\n");
+            for (Index idx : indexSet) {
+                Student student = get(idx.getId());
+                writer.write("    <tr>\n" +
+                        "        <td>"+ idx.getId() +"</td><td>" + student.getLastName() + "</td><td>" + student.getName() +
+                        "</td><td>" + student.getFatherName() + "</td><td>" + student.getGroup() + "</td>\n" +
+                        "    </tr>\n");
+            }
+            writer.write("</table>\n" +
+                    "</body>\n" +
+                    "</html>");
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void editStudent(Student student) {
         appendObject(student);
     }
 
+    public static void open() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("lab2_12_db/src/main/resources/student.idx"))) {
+            indexSet = (TreeSet<Index>) ois.readObject();
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void close() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lab2_12_db/src/main/resources/student.idx"))){
+            oos.writeObject(indexSet);
+            oos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
