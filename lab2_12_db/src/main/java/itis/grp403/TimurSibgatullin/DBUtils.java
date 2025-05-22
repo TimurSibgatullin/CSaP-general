@@ -1,16 +1,21 @@
 package itis.grp403.TimurSibgatullin;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.*;
 
 public class DBUtils {
     public static final String TABLE = "lab2_12_db/src/main/resources/student.tbl";
     private static Set<Index> indexSet = new TreeSet<>();
+
     public static void appendStudent(Student student) {
         Index index = new Index();
         index.setId(student.getId());
         if (indexSet.contains(index)) {
-            System.out.println("Студент с этим id уже существует");
+            System.out.println("Студент с этим id уже существует\n---------------------------------");
+        } else {
+            appendObject(student);
+            System.out.println("Сделано\n---------------------------------");
         }
     }
 
@@ -98,7 +103,8 @@ public class DBUtils {
     public static void delete(int id) {
         long position = findPosition(id);
         if (position == -1) {
-            throw new RuntimeException("ID не найден для удаления: " + id);
+            System.out.println("Студент с этим id не найден\n--------------------------------");
+            return;
         }
         Index index = new Index();
         index.setId(id);
@@ -117,7 +123,8 @@ public class DBUtils {
     public static Student get(int id) {
         long position = findPosition(id);
         if (position == -1) {
-            throw new RuntimeException("ID не найден для удаления: " + id);
+            System.out.print("Студент с этим id не найден: ");
+            return null;
         }
         File file = new File(TABLE);
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
@@ -169,7 +176,14 @@ public class DBUtils {
     }
 
     public static void editStudent(Student student) {
-        appendObject(student);
+        Index index = new Index();
+        index.setId(student.getId());
+        if (indexSet.contains(index)) {
+            appendObject(student);
+            System.out.println("Сделано\n---------------------------------");
+        } else {
+            System.out.println("Студент с данным id отсутствует\n---------------------------------");
+        }
     }
 
     public static void open() {
@@ -179,12 +193,14 @@ public class DBUtils {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("База данных инициализирована\n---------------------------------");
     }
 
     public static void close() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("lab2_12_db/src/main/resources/student.idx"))){
             oos.writeObject(indexSet);
             oos.flush();
+            System.out.println("База данных сохранена\n---------------------------------");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
