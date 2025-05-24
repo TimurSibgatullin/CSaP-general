@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 public class Integral implements Consumer<Double> {
     private static int N;
-    private double integral = 0;
+    private volatile double integral = 0;
 
     public static void main(String[] args) throws InterruptedException {
         // [1, 3]
@@ -38,7 +38,7 @@ public class Integral implements Consumer<Double> {
     }
 
     @Override
-    public void accept(Double d) {
+    public synchronized void accept(Double d) {
         integral += d;
     }
 
