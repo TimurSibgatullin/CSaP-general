@@ -177,7 +177,7 @@ public class MainBooking {
                             .filter(p -> p.getPerson().getBirthdate().after(dateAfter))
                             .filter(p -> p.getPerson().getBirthdate().before(dateBefore))
                             .count()
-                            * 100 /
+                            * 100.0 /
                     bookings
                             .getBookings()
                             .stream()

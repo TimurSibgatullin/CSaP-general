@@ -28,6 +28,7 @@
         <module>lab2_10_test</module>
         <module>lab2_12_db</module>
         <module>lab2_11_ObjectsIO</module>
+        <module>lab2_13_Threads</module>
     </modules>
 
     <properties>

@@ -10,6 +10,7 @@ public class DBUtils {
 
     public static void appendStudent(Student student) {
         Index index = new Index();
+
         index.setId(student.getId());
         if (indexSet.contains(index)) {
             System.out.println("Студент с этим id уже существует\n---------------------------------");
