@@ -9,19 +9,34 @@ public class Integral implements Consumer<Double> {
 
     public static void main(String[] args) throws InterruptedException {
         // [1, 3]
-        Integral integralObj = new Integral();
+        Integral integralObj1 = new Integral();
+        Integral integralObj2 = new Integral();
         int countProc = Runtime.getRuntime().availableProcessors();
         N = 1000 / countProc; // количество столбиков для суммирования задачей
         double h = (3 - 1.0) / countProc; //
         Thread[] thread = new Thread[countProc];
+        long start = System.nanoTime();
         for (int i = 0; i < countProc; i++) {
-            thread[i] = new Thread(new PartSumCalculate(1 + i * h, 1 + (i + 1) * h, integralObj));
+            thread[i] = new Thread(new PartSumCalculate(1 + i * h, 1 + (i + 1) * h, integralObj1));
+            thread[i].start();
+            thread[i].join();
+        }
+        long end = System.nanoTime();
+        System.out.println("Sequential duration " + (end - start));
+        System.out.println(integralObj1.integral);
+
+        thread = new Thread[countProc];
+        start = System.nanoTime();
+        for (int i = 0; i < countProc; i++) {
+            thread[i] = new Thread(new PartSumCalculate(1 + i * h, 1 + (i + 1) * h, integralObj2));
             thread[i].start();
         }
         for (int i = 0; i < countProc; i++) {
             thread[i].join();
         }
-        System.out.println(integralObj.integral);
+        end = System.nanoTime();
+        System.out.println("Parallel duration " + (end - start));
+        System.out.println(integralObj2.integral);
     }
 
     public static double func(double x) {

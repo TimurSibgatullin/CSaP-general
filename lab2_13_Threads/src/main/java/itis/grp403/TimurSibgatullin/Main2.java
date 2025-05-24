@@ -13,7 +13,6 @@ public class Main2 {
         task3.start();
         task4.start();
         task5.start();
-
     }
 
 
