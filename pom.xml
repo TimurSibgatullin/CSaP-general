@@ -29,6 +29,8 @@
         <module>lab2_12_db</module>
         <module>lab2_11_ObjectsIO</module>
         <module>lab2_13_Threads</module>
+        <module>lab2_14_music_player</module>
+        <module>lab2_15_tasks</module>
     </modules>
 
     <properties>
