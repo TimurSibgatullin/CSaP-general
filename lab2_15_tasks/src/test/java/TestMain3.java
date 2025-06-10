@@ -1,4 +1,4 @@
-import itis.grp403.TimurSibgatullin.Main3;
+import itis.grp403.TimurSibgatullin.testFiles.Main3;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;

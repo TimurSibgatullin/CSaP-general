@@ -2,16 +2,17 @@ package itis.grp403.TimurSibgatullin.Player;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 public class Track implements Serializable {
     private Integer number;
     private String name;
     private String author;
     private String path;
 
-    public Track() {}
+    public Track(){}
 
-    public Track(Integer number, String name, String author, String path) {
-        this.number = number;
+    public Track(String name, String author, String path) {
         this.name = name;
         this.author = author;
         this.path = path;
@@ -47,5 +48,10 @@ public class Track implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + author;
     }
 }
