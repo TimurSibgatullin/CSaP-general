@@ -6,7 +6,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-public class PlaySound {
+public class SoundPlayer {
     private Clip clip;
 
     public Clip getClip() {
@@ -14,15 +14,22 @@ public class PlaySound {
     }
 
     public void play(Track track) {
-        new Thread(()->{try {
+        try {
             AudioInputStream audioStream =
                     AudioSystem.getAudioInputStream(new File(track.getPath()));
             clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-            //clip.stop();
         } catch (Exception e) {
             e.printStackTrace();
-        }}).start();
+        }
+    }
+
+    public void stop() {
+        try {
+            clip.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

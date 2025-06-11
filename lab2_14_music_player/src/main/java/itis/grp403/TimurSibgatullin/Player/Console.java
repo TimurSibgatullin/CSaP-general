@@ -6,13 +6,17 @@ import java.util.Scanner;
 public class Console {
     private PlayList playlist;
     private Track currentTrack;
+    private SoundPlayer soundPlayer;
 
     public Console() {
         this.playlist = new PlayList();
-        playlist.load();
+         playlist.load();
     }
+
     public void showMenu() {
-        System.out.println("Проигрывается " + currentTrack);
+        if (currentTrack != null) {
+            System.out.println("Проигрывается " + currentTrack);
+        }
         System.out.println("1 Показать все треки\n" +
                 "   2 Найти трек по названию\n" +
                 "   3 Найти трек по автору\n" +
@@ -33,19 +37,46 @@ public class Console {
             System.out.println("Введите команду:");
             int command = sc.nextInt();
             flag = commandHandler(command);
-
         }
     }
 
     public boolean commandHandler(int command) {
+        Scanner sc = new Scanner(System.in);
         switch (command) {
             case 10:
                 return false;
             case 1:
                 playlist.showAll();
                 break;
+            case 2:
+                System.out.println("Введите название:");
+                String author = sc.nextLine();
+                playlist.findByAuthor(author);
+                break;
+            case 3:
+                System.out.println("Введите автора:");
+                author = sc.nextLine();
+                playlist.findByAuthor(author);
+            case 4:
+                System.out.println("Введите номер:");
+                author = sc.nextLine();
+                playlist.findByAuthor(author);
             case 5:
-
+                System.out.println("Введите номер:");
+                author = sc.nextLine();
+                playlist.findByAuthor(author);
+            case 6:
+                playlist.showAll();
+                break;
+            case 7:
+                playlist.showAll();
+                break;
+            case 8:
+                playlist.showAll();
+                break;
+            case 9:
+                playlist.showAll();
+                break;
 
         }
         return true;

@@ -6,10 +6,16 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class WavPlayer {
+    public boolean isPlaying;
+
+    public WavPlayer() {
+        this.isPlaying = false;
+    }
+
     public static void main(String[] args) {
         try {
             AudioInputStream audioStream =
-                    AudioSystem.getAudioInputStream(new File("Черные глаза - Айдамир Мугу.wav"));
+                    AudioSystem.getAudioInputStream(new File("C:\\Users\\timur\\IdeaProjects\\CSaP-general\\lab2_14_music_player\\src\\main\\java\\itis\\grp403\\TimurSibgatullin\\Player\\Glass House.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
