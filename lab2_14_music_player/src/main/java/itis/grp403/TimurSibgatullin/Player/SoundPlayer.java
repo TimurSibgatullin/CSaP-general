@@ -8,28 +8,30 @@ import java.io.File;
 
 public class SoundPlayer {
     private Clip clip;
+    public Thread currentThread;
 
     public Clip getClip() {
         return clip;
     }
 
     public void play(Track track) {
-        try {
+        currentThread = new Thread(()-> { try {
             AudioInputStream audioStream =
                     AudioSystem.getAudioInputStream(new File(track.getPath()));
-            clip = AudioSystem.getClip();
+            this.clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
+            Thread.sleep(clip.getMicrosecondLength()/1000);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }});
+        currentThread.start();
     }
 
     public void stop() {
         try {
+            currentThread.interrupt();
             clip.stop();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

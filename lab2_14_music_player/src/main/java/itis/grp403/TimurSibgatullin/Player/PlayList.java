@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PlayList {
+public class PlayList implements Serializable {
 
     private List<Track> playlist;
 
@@ -41,6 +41,7 @@ public class PlayList {
         playlist.add(track);
         save();
     }
+
     public void showAll() {
         for(Track track : playlist) {
             System.out.println(track.getNumber() + ": " +
@@ -72,5 +73,7 @@ public class PlayList {
                         .findFirst();
     }
 
-
+    public List<Track> getPlaylist() {
+        return playlist;
+    }
 }

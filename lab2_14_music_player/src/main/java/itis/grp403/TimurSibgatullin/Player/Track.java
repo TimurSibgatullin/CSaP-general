@@ -52,6 +52,6 @@ public class Track implements Serializable {
 
     @Override
     public String toString() {
-        return name + " " + author;
+        return name + " " + author + " " + path;
     }
 }
