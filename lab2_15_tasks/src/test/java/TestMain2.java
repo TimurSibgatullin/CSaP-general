@@ -1,32 +1,33 @@
+import itis.grp403.TimurSibgatullin.testFiles.Main2;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class TestMain2 {
     @Test
-    public void testCopyBytes() throws IOException {
-        // Тестовые данные
-        String inputText = "Пример текста для копирования.";
-        byte[] expectedBytes = inputText.getBytes();
+    public void testCountByteFrequencies() throws IOException {
+        File tempFile = File.createTempFile("test", ".tmp");
+        tempFile.deleteOnExit();
 
-        // Создаем ByteArrayInputStream и ByteArrayOutputStream
-        ByteArrayInputStream bais = new ByteArrayInputStream(inputText.getBytes());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        // Выполняем копирование
-        int byteRead;
-        while ((byteRead = bais.read()) != -1) {
-            baos.write(byteRead);
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(new byte[]{0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5});
         }
 
-        // Получаем фактические байты из ByteArrayOutputStream
-        byte[] actualBytes = baos.toByteArray();
+        int[] expectedFrequencies = new int[256];
+        expectedFrequencies[0] = 3;
+        expectedFrequencies[1] = 3;
+        expectedFrequencies[2] = 3;
+        expectedFrequencies[3] = 3;
+        expectedFrequencies[4] = 3;
+        expectedFrequencies[5] = 3;
 
-        // Проверяем, что фактические байты совпадают с ожидаемыми
-        assertArrayEquals(expectedBytes, actualBytes);
+        int[] actualFrequencies = Main2.countByteFrequencies(tempFile.getAbsolutePath());
+
+        assertArrayEquals(expectedFrequencies, actualFrequencies);
     }
 }

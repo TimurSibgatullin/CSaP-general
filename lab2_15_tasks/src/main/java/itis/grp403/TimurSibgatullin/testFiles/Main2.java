@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Main2 {
     public static int[] countByteFrequencies(String filePath) throws IOException {
-    int[] frequencies = new int[256]; // Массив для хранения частот байтов от 0 до 255
+    int[] frequencies = new int[256];
 
     try (FileInputStream fis = new FileInputStream(filePath)) {
         int byteRead;
@@ -16,13 +16,24 @@ public class Main2 {
 }
 
     public static void printFrequencyDiagram(int[] frequencies) {
-        for (int i = 0; i < frequencies.length; i++) {
-            System.out.printf("Byte %03d: %d\n", i, frequencies[i]);
+        boolean flag = true;
+        while (flag) {
+            flag = false;
+            for (int i = 0; i < frequencies.length; i++) {
+                if (frequencies[i] > 0) {
+                    System.out.print("+");
+                    frequencies[i]--;
+                    flag = true;
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
         }
     }
 
     public static void main(String[] args) {
-        String filePath = "path/to/your/file"; // Укажите путь к вашему файлу
+        String filePath = "input.txt";
         try {
             int[] frequencies = countByteFrequencies(filePath);
             printFrequencyDiagram(frequencies);
