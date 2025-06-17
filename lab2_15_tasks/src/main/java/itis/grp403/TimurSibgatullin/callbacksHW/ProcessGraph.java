@@ -19,7 +19,6 @@ public class ProcessGraph {
         Process dependency = processes.get(dependencyId);
         if (dependent != null && dependency != null) {
             dependent.addDependency(dependency);
-            // Добавляем коллбек в зависимость, чтобы она уведомила зависимый процесс о завершении
             dependency.addCallback(new Callback() {
                 @Override
                 public void onComplete() {

@@ -41,15 +41,12 @@ public class Process {
     }
 
     public void execute() {
-        // Проверяем, завершен ли процесс
         if (completed || executing) {
             return;
         }
 
-        // Проверяем, все ли зависимости завершены
         for (Process dependency : dependencies) {
             if (!dependency.isCompleted()) {
-                // Добавляем текущий процесс как коллбек к зависимости
                 dependency.addCallback(new Callback() {
                     @Override
                     public void onComplete() {
@@ -59,8 +56,6 @@ public class Process {
                 return;
             }
         }
-
-        // Все зависимости завершены, выполняем текущий процесс
         runProcess();
     }
 
@@ -68,16 +63,13 @@ public class Process {
         executing = true;
         new Thread(() -> {
             try {
-                // Выполняем текущий процесс
                 System.out.println("Процесс " + id + " начинает выполнение.");
                 Thread.sleep(executionTime);
                 System.out.println("Процесс " + id + " завершил выполнение.");
 
-                // Устанавливаем флаг завершения
                 completed = true;
                 executing = false;
 
-                // Вызываем все коллбеки
                 for (Callback callback : callbacks) {
                     callback.onComplete();
                 }
@@ -93,14 +85,11 @@ public class Process {
     }
 
     void executeIfReady() {
-        // Проверяем, все ли зависимости завершены
         for (Process dependency : dependencies) {
             if (!dependency.isCompleted()) {
                 return;
             }
         }
-
-        // Все зависимости завершены, выполняем текущий процесс
         execute();
     }
 }
