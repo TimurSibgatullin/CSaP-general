@@ -4,11 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProcessGraph {
-    private final Map<Integer, Process> processes;
-
-    public ProcessGraph() {
-        this.processes = new HashMap<>();
-    }
+    private final Map<Integer, Process> processes = new HashMap<>();
 
     public void addProcess(int id, int executionTime) {
         processes.put(id, new Process(id, executionTime));
@@ -17,25 +13,18 @@ public class ProcessGraph {
     public void addDependency(int dependentId, int dependencyId) {
         Process dependent = processes.get(dependentId);
         Process dependency = processes.get(dependencyId);
-        if (dependent != null && dependency != null) {
-            dependent.addDependency(dependency);
-            dependency.addCallback(new Callback() {
-                @Override
-                public void onComplete() {
-                    dependent.executeIfReady();
-                }
-            });
-        } else {
+
+        if (dependent == null || dependency == null) {
             throw new IllegalArgumentException("Процесс с указанным ID не существует.");
         }
+
+        dependent.addDependency(dependency);
     }
 
-    public void startProcess(int id) {
-        Process process = processes.get(id);
-        if (process != null) {
+    public void startAll() {
+        // Запускаем только те процессы, у которых нет зависимостей
+        for (Process process : processes.values()) {
             process.execute();
-        } else {
-            throw new IllegalArgumentException("Процесс с указанным ID не существует.");
         }
     }
 }

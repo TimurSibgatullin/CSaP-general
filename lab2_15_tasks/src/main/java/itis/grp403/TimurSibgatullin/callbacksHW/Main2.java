@@ -29,15 +29,6 @@ public class Main2 {
         graph.addDependency(3, 1);
         graph.addDependency(2, 1);
 
-        graph.startProcess(1);
-        graph.startProcess(2);
-        graph.startProcess(3);
-        graph.startProcess(4);
-        graph.startProcess(5);
-        graph.startProcess(6);
-        graph.startProcess(7);
-        graph.startProcess(8);
-        graph.startProcess(9);
-        graph.startProcess(10);
+        graph.startAll();
     }
 }
