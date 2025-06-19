@@ -81,13 +81,13 @@ public class JSONMapper {
     private Map<String, String> parseJsonToMap(String json) {
         Map<String, String> map = new HashMap<>();
         json = json.trim().substring(1, json.length() - 1); // Remove { and }
-        String[] entries = json.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // Split by commas not in quotes
+        String[] entries = json.split(",");
 
         for (String entry : entries) {
             String[] kv = entry.split(":", 2);
             if (kv.length != 2) continue;
-            String key = kv[0].trim().replaceAll("^\"|\"$", "");
-            String value = kv[1].trim().replaceAll("^\"|\"$", "");
+            String key = kv[0].trim().replaceAll("^\"|\"", "");
+            String value = kv[1].trim().replaceAll("^\"|\"", "");
             map.put(key, value);
         }
         return map;

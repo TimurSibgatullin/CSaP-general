@@ -18,8 +18,6 @@ public class Process {
 
     public void addDependency(Process dependency) {
         dependencies.add(dependency);
-
-        // При завершении зависимости — проверим, готов ли процесс к запуску
         dependency.addCallback(this::executeIfReady);
     }
 
@@ -32,7 +30,7 @@ public class Process {
 
         for (Process dependency : dependencies) {
             if (!dependency.isCompleted()) {
-                return; // Не все зависимости выполнены — ждём
+                return;
             }
         }
 
@@ -47,7 +45,7 @@ public class Process {
                 System.out.println("Процесс " + id + " завершил выполнение.");
 
                 for (Callback callback : callbacks) {
-                    callback.onComplete();
+                    callback.call();
                 }
 
             } catch (InterruptedException e) {
@@ -62,10 +60,6 @@ public class Process {
     }
 
     private void executeIfReady() {
-        execute(); // Уже внутри есть проверка зависимостей
-    }
-
-    public boolean isReady() {
-        return dependencies.stream().allMatch(Process::isCompleted);
+        execute();
     }
 }

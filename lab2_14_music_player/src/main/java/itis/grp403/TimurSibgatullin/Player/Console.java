@@ -76,7 +76,7 @@ public class Console {
                 Optional<Track> temp2 = playlist.findByNumber(numb2);
                 soundPlayer.stop();
                 temp2.ifPresent(track -> currentTrack = track);
-                soundThread = new Thread(()->
+                soundThread = new Thread(() ->
                         temp2.ifPresent(track -> {
                             soundPlayer.play(track);
                             try {

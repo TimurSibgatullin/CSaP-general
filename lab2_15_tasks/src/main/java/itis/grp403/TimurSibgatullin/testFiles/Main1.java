@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+//1. Считать файл в масcив (использовать FileInputStream ), отсортировать массив байт подсчетом,
+//записать в новый файл. Для сортировки написать тест.
+
 public class Main1 {
     public static byte[] readFileToByteArray(String filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath)) {

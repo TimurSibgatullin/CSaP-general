@@ -13,16 +13,10 @@ public class ProcessGraph {
     public void addDependency(int dependentId, int dependencyId) {
         Process dependent = processes.get(dependentId);
         Process dependency = processes.get(dependencyId);
-
-        if (dependent == null || dependency == null) {
-            throw new IllegalArgumentException("Процесс с указанным ID не существует.");
-        }
-
         dependent.addDependency(dependency);
     }
 
     public void startAll() {
-        // Запускаем только те процессы, у которых нет зависимостей
         for (Process process : processes.values()) {
             process.execute();
         }

@@ -1,6 +1,10 @@
 package itis.grp403.TimurSibgatullin.testFiles;
 import java.io.*;
 
+// 2. Считать файл побайтно в ByteArrayOutputStream (использовать FileInputStream)
+//построить диаграмму (вниз) частот встречающихся байтов (байт 0..255).
+//Написать тест процедуры формирующей массив с частотами.
+
 public class Main2 {
     public static int[] countByteFrequencies(String filePath) throws IOException {
     int[] frequencies = new int[256];

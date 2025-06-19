@@ -5,6 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+//3. Текст перевести в ByteArrayInputStream, скопировать побайтно в ByteArrayOutputStram, записать в файл. Написать тест
+//процедуры копирования.
+
 public class Main3 {
     public static ByteArrayOutputStream copy(ByteArrayInputStream bais) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
