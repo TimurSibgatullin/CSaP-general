@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-//1. Считать файл в масcив (использовать FileInputStream ), отсортировать массив байт подсчетом,
+//1. Считать файл в масcив (использовать FileInputStream), отсортировать массив байт подсчетом,
 //записать в новый файл. Для сортировки написать тест.
 
 public class Main1 {
@@ -19,7 +19,7 @@ public class Main1 {
     public static byte[] countingSort(byte[] array) {
         int[] count = new int[256];
         for (byte b : array) {
-            count[b & 0xFF]++;
+            count[b]++;
         }
 
         byte[] sortedArray = new byte[array.length];
