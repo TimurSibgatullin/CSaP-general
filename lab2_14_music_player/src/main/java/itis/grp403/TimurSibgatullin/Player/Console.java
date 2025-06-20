@@ -78,14 +78,14 @@ public class Console {
                 temp2.ifPresent(track -> currentTrack = track);
                 soundThread = new Thread(() ->
                         temp2.ifPresent(track -> {
-                            soundPlayer.play(track);
-                            try {
-                                soundPlayer.currentThread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            currentTrack = null;}
-                        ));
+                            currentTrack = track;
+                            soundThread = new Thread(() -> {
+                                soundPlayer.play(track, () -> {
+                                    playNext();
+                                });
+                            });
+                            soundThread.start();
+                        }));
                 soundThread.start();
                 break;
             case 6:
@@ -106,13 +106,15 @@ public class Console {
                 }
                 currentTrack = track2;
                 soundThread = new Thread(()-> {
-                            soundPlayer.play(track2);
-                            try {
-                                soundPlayer.currentThread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            currentTrack = null;
+                        soundPlayer.play(currentTrack, () -> {
+                            playNext();
+                        });
+                        try {
+                            soundPlayer.currentThread.join();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        currentTrack = null;
                 });
                 soundThread.start();
                 break;
@@ -126,7 +128,9 @@ public class Console {
                 }
                 currentTrack = track2;
                 soundThread = new Thread(()-> {
-                    soundPlayer.play(track2);
+                    soundPlayer.play(currentTrack, () -> {
+                        playNext();
+                    });
                     try {
                         soundPlayer.currentThread.join();
                     } catch (InterruptedException e) {
@@ -151,5 +155,17 @@ public class Console {
         }
         return true;
 
+    }
+
+    private void playNext() {
+        int nextNumber = currentTrack.getNumber() + 1;
+        Optional<Track> nextTrack = playlist.findByNumber(nextNumber);
+        nextTrack.ifPresent(track -> {
+            currentTrack = track;
+            soundThread = new Thread(() -> {
+                soundPlayer.play(track, this::playNext);
+            });
+            soundThread.start();
+        });
     }
 }

@@ -1,10 +1,9 @@
 package itis.grp403.TimurSibgatullin.Player;
 
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 
 public class SoundPlayer {
     private Clip clip;
@@ -14,23 +13,28 @@ public class SoundPlayer {
         return clip;
     }
 
-    public void play(Track track) {
-        currentThread = new Thread(()-> { try {
-            AudioInputStream audioStream =
-                    AudioSystem.getAudioInputStream(new File(track.getPath()));
-            this.clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
-            Thread.sleep(clip.getMicrosecondLength()/1000);
-        } catch (Exception e) {
-        }});
+    public void play(Track track, Runnable onTrackEnd) {
+        currentThread = new Thread(() -> {
+            try {
+                AudioInputStream audioStream =
+                        AudioSystem.getAudioInputStream(new File(track.getPath()));
+                this.clip = AudioSystem.getClip();
+                clip.open(audioStream);
+                clip.start();
+                Thread.sleep(clip.getMicrosecondLength()/1000);
+                clip.close();
+                onTrackEnd.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         currentThread.start();
     }
 
     public void stop() {
         try {
             currentThread.interrupt();
-            clip.stop();
+            clip.close();
         } catch (Exception e) {
         }
     }
