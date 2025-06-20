@@ -3,7 +3,6 @@ package itis.grp403.TimurSibgatullin.Player;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 
 public class SoundPlayer {
     private Clip clip;
@@ -25,7 +24,6 @@ public class SoundPlayer {
                 clip.close();
                 onTrackEnd.run();
             } catch (Exception e) {
-                e.printStackTrace();
             }
         });
         currentThread.start();

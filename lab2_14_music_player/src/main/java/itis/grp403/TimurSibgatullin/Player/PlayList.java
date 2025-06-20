@@ -26,7 +26,6 @@ public class PlayList implements Serializable {
     public void load() {
         try (ObjectInputStream ois = new ObjectInputStream(
                 new FileInputStream("Playlist.pst"))) {
-
             playlist = (List<Track>) ois.readObject();
 
         } catch (FileNotFoundException e) {
